@@ -8,7 +8,7 @@ let tableBody = document.querySelector("#accountlistul");
 let transactionDiv = document.querySelector("#transaction-log");
 document.getElementsByClassName("delete-btn").click =  () => {removeUser()};
 let searchTerm= "";
-let filterRule = "";
+let filterRule = "name";
 
 document.querySelector("#userForm").onsubmit = (e) => {   
     console.log(filterRule);
@@ -49,7 +49,7 @@ document.querySelector("#transactionForm").onsubmit = (e) => {
         document.getElementById("amount").value = "";
     }
     if(sender === receiver){ // check if the sender and receiver are the same
-        alerts.push({type:"makeTransaction", status:"fail", sender:sender,message:`You cannot send money to yourself`});
+        alerts.push({type:"makeTransaction", status:"fail", message:"You cannot send money to yourself"});
     }
     else if(amount > 0 ){ // check if the amount is valid;
         if(users[senderIndex].balance >= amount){ // check if the sender has enough money
@@ -69,19 +69,8 @@ document.querySelector("#transactionForm").onsubmit = (e) => {
     resetForm(); 
         }  
 // end of transactionForm onsubmit event
-document.getElementById("search-input").addEventListener("input", e => {
-    searchTerm = e.target.value;
 
-    setTransactionLog();
-})
-document.getElementById("filter-select").addEventListener("change", e => {
-    filterRule = e.target.value;
-    filterTransaction();
 
-})
-document.getElementById("clear-button").onclick = () => {
-    document.getElementById("search-input").value = "";
-}
 const removeUser = (e) => {
     e.preventDefault();
     users = users.filter(item => item.name !== e.target.value);
@@ -195,25 +184,38 @@ const setTransactionLog = () => {
         }
 })
 }
+document.getElementById("search-input").addEventListener("input", e => {
+    searchTerm = e.target.value;
+    setTransactionLog();
+})
+document.getElementById("filter-select").addEventListener("change", e => {
+    filterRule = e.target.value;
+    setTransactionLog();
+})
+document.getElementById("clear-button").onclick = () => {
+    document.getElementById("search-input").value = "";
+    searchTerm = "";
+    setTransactionLog();
+}
 const filterTransaction = (arr) => {
-    // sets the filterRule to the value of the select option.
-    filterRule = document.getElementById("filter-select").value;
-    // Then, filters the alerts array that is addUser type and has the name of the user.
-    const userAddedLogs = arr.filter(item => item.accountOwner && item.type === "addUser" && item.accountOwner.toLowerCase().includes(searchTerm.toLowerCase()) );
-    // Then, checks if the filterRule is "name".
-    if(filterRule === "name") {
-        // If so, filters the alerts array that is makeTransaction type and has the name of the user in either as receiver or as sender.
-        const transactionLogFilter = arr.filter(item => item.type === "makeTransaction" && item.sender.toLowerCase().includes(searchTerm.toLowerCase()) || item.type === "makeTransaction" && item.receiver.toLowerCase().includes(searchTerm.toLowerCase()));
-        // Returns the concatenation of the two arrays.
-        filterRule = "";
-        return [...userAddedLogs, ...transactionLogFilter];
+    searchTerm = document.getElementById("search-input").value;
+    // sets the filterRule to the value of the select option
+
+    if(searchTerm === "") {
+        return arr;
+    }
+    if(filterRule === "name" && searchTerm != "") {
+        // If so filterRule is name, filters the alerts array that is makeTransaction type and has the name of the user in either as receiver or as sender.
+        const transactionLogFilter = arr.filter(item => item.sender && item.sender.toLowerCase().includes(searchTerm.toLowerCase()) || item.receiver && item.receiver.toLowerCase().includes(searchTerm.toLowerCase()));
+        console.log("buradayım");
+        console.log(filterRule);
+        console.log(searchTerm);
+        return transactionLogFilter;
     }
     else {
         // filters the alert arrays that is makeTransaction type and has the balance of the user.
         const transactionLogFilter = arr.filter(item => item[filterRule] && item[filterRule].toLowerCase().includes(searchTerm.toLowerCase()));
-        filterRule = "";
-        // Returns the concatenation of the two arrays. 
-        return [...userAddedLogs, transactionLogFilter];
+        return transactionLogFilter;
 
     }
 }   
