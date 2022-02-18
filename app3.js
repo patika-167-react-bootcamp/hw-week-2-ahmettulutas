@@ -71,12 +71,17 @@ document.querySelector("#transactionForm").onsubmit = (e) => {
 // end of transactionForm onsubmit event
 document.getElementById("search-input").addEventListener("input", e => {
     searchTerm = e.target.value;
+
     setTransactionLog();
 })
 document.getElementById("filter-select").addEventListener("change", e => {
     filterRule = e.target.value;
-})
+    filterTransaction();
 
+})
+document.getElementById("clear-button").onclick = () => {
+    document.getElementById("search-input").value = "";
+}
 const removeUser = (e) => {
     e.preventDefault();
     users = users.filter(item => item.name !== e.target.value);
