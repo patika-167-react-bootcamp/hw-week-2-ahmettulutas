@@ -97,7 +97,6 @@ const setUserTable = (arr, table) => {
         table.appendChild(li);      
     })
 }
-
 const setOptions = (arr, senders, receivers) => {
     // we need to define default options for the select options.
     let defaultSenderOpt = document.createElement("option");
@@ -120,7 +119,6 @@ const setOptions = (arr, senders, receivers) => {
         receivers.appendChild(opt.cloneNode(true));
         })
 }
-
 const undoTransaction = (e) => { 
     e.preventDefault();
     const dataObject = alerts[e.target.value];
@@ -143,8 +141,6 @@ const undoTransaction = (e) => {
     setUserTable(users, tableBody);
     setTransactionLog();
 }
-
-
 const setTransactionLog = () => {
     transactionDiv.innerText = ""; 
     filterTransaction(alerts).forEach((item,index) => {
@@ -184,6 +180,7 @@ const setTransactionLog = () => {
         }
 })
 }
+// Below code is used to filter the alerts array to only show the transactions that are relevant to the user.
 document.getElementById("search-input").addEventListener("input", e => {
     searchTerm = e.target.value;
     setTransactionLog();
@@ -198,25 +195,21 @@ document.getElementById("clear-button").onclick = () => {
     setTransactionLog();
 }
 const filterTransaction = (arr) => {
+    // sets the searchTerm to the value of the search input
     searchTerm = document.getElementById("search-input").value;
-    // sets the filterRule to the value of the select option
-
+    // if the searchTerm is empty, we return the whole array.
     if(searchTerm === "") {
         return arr;
     }
     if(filterRule === "name" && searchTerm != "") {
         // If so filterRule is name, filters the alerts array that is makeTransaction type and has the name of the user in either as receiver or as sender.
         const transactionLogFilter = arr.filter(item => item.sender && item.sender.toLowerCase().includes(searchTerm.toLowerCase()) || item.receiver && item.receiver.toLowerCase().includes(searchTerm.toLowerCase()));
-        console.log("buradayım");
-        console.log(filterRule);
-        console.log(searchTerm);
         return transactionLogFilter;
     }
     else {
-        // filters the alert arrays that is makeTransaction type and has the balance of the user.
+        // filters the alert objects that has filterRule paremeter (it can be sender or receiver) and has searchTerm letters.
         const transactionLogFilter = arr.filter(item => item[filterRule] && item[filterRule].toLowerCase().includes(searchTerm.toLowerCase()));
         return transactionLogFilter;
-
     }
 }   
 
