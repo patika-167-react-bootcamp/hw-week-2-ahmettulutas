@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="./index.css">
+    </head>
+    <body>
+        <header>
+            BANKING TRANSACTION ACCOUNT!
+        </header>
+        <main>
+            <article class="data-table">
+                    <h1 class="heading">Register</h1> 
+                    <form class="forms" id="userForm">
+                            <div class="input-div">
+                                <input class="value-inputs" placeholder="your name..." required id="accountName" type="text" name="accountName">
+                                <input class="value-inputs" placeholder="your balance amount..." required id="accountBalance" type="number" name="accountBalance">
+                            </div>
+                            <input class="submit-button" type="submit" value="Register">
+                    </form>
+                    <section class="action-details" id="user-section">
+                        <h1 class="heading">Current Users</h1>
+                        <ul class="action-items" id="accountlistul">
+                        <!-- this is where the account names will be appended as list items.  -->
+                        </ul>
+                    </section>
+            </article>
+            <article class="data-table">
+                    <h1 class="heading">Make a Transaction</h1>
+                    <form class="select-form" id="transactionForm">
+                            <select class="value-inputs" required id="sender" name="sender">
+                                <option value="">From</option>
+                        <!-- this is where the sender names will be appended as options.  -->
+                            </select>
+                            <select class="value-inputs" required id="receiver" name="receiver">
+                        <!-- this is where the receiver names will be appended as options.  --> 
+                                <option value="">To</option>
+                            </select>
+                            <input class="value-inputs" placeholder="amount" required id="amount" type="number" name="amount">
+                            <input class="submit-button" type="submit" value="Send">
+                    </form>
+                    <section class="action-details" id="transaction-history">
+                        <section class="select-form" id="transactionForm">
+                            <select id="filter-select">
+                                <option value="name">Filter by Name</option>
+                                <option value="sender">Filter by Sender</option>
+                                <option value="receiver">Filter by Receiver</option>
+                            </select>
+                            <input class="value-inputs" type="text" placeholder="Search" id="search-input">
+                            <button id="clear-button" class="remove-button">X</button>
+                        </section>
+                        <h1 class="heading">Transaction History</h1>    
+                        <ul class="action-items" id="transaction-log">
+                            <!-- this is where transaction history will be appended. -->
+                        </ul>
+                    </section>
+                </article>
+            </section>
+        </main>
+        <script type="module" src="./app3.js"></script>
+    </body>
+</html>
