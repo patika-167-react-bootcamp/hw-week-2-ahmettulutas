@@ -122,8 +122,8 @@ const setOptions = (arr, senders, receivers) => {
 const undoTransaction = (e) => { 
     e.preventDefault();
     const dataObject = alerts[e.target.value];
-    if(users.filter(item => item.name === dataObject.sender).length === 0) {
-        alerts.push({status:"fail",message:`${dataObject.sender} has been removed from the bank`});
+    if(users.filter(item => item.name === dataObject.sender || dataObject.receiver).length === 0) {
+        alerts.push({status:"fail",message:`${dataObject.sender} or ${dataObject.receiver} has been removed from the bank`});
     }
     else {
         users.map(item => {
